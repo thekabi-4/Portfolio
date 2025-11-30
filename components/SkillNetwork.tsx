@@ -1,200 +1,376 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SKILLS } from "../constants";
 
 const SkillNetwork = () => {
-  const [radius, setRadius] = useState(280);
-  const [isMobile, setIsMobile] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  // Responsive Breakpoints
+  const isMobile = dimensions.width < 768;
+  const isTablet = dimensions.width >= 768 && dimensions.width < 1024;
+
+  // Configuration
+  const CENTER_RADIUS = isMobile ? 40 : isTablet ? 50 : 65; // Slightly larger center
+  const NODE_RADIUS = isMobile ? 28 : isTablet ? 35 : 45; // Slightly larger nodes
+
+  // Orbit Radius Calculation
+  const baseOrbit = isTablet ? 220 : 300;
+  const ORBIT_RADIUS = isMobile
+    ? 0
+    : Math.min(dimensions.width * 0.35, baseOrbit);
+
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     const handleResize = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setRadius(140);
-        setIsMobile(true);
-      } else if (width < 1024) {
-        setRadius(220);
-        setIsMobile(false);
-      } else {
-        setRadius(300);
-        setIsMobile(false);
+      if (containerRef.current) {
+        // Debounce resize
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          if (containerRef.current) {
+            setDimensions({
+              width: containerRef.current.clientWidth,
+              height: containerRef.current.clientHeight,
+            });
+          }
+        }, 100);
       }
     };
 
-    handleResize();
+    // Initial call without debounce to prevent flash
+    if (containerRef.current) {
+      setDimensions({
+        width: containerRef.current.clientWidth,
+        height: containerRef.current.clientHeight,
+      });
+    }
+
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
-  // Pre-calculate node positions
-  const nodes = SKILLS.map((skill, i) => {
-    // Start from -90 degrees (Top) instead of 0 (Right)
-    const angle = (i / SKILLS.length) * 2 * Math.PI - Math.PI / 2;
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius;
+  // Calculate Node Positions & Quadrants
+  const nodes = useMemo(() => {
+    const totalNodes = SKILLS.length;
 
-    // Determine quadrant/direction for tooltip
-    // Convert angle to degrees for easier logic (0 to 360)
-    let degrees = (angle * 180) / Math.PI;
-    degrees = (degrees + 360) % 360; // Normalize
+    return SKILLS.map((skill, index) => {
+      if (isMobile) {
+        // Mobile: Stacked Layout (No radial calculation needed)
+        return { ...skill, x: 0, y: 0, angle: 0, quadrant: "center" };
+      }
 
-    // Adjusted logic for rotated layout
-    // 270 (-90) is Top. 0 is Right. 90 is Bottom. 180 is Left.
-    // We want tooltips to point OUTWARDS.
+      // Radial Layout
+      const angle = (index / totalNodes) * 2 * Math.PI - Math.PI / 2; // Start from top
+      const x = Math.cos(angle) * ORBIT_RADIUS;
+      const y = Math.sin(angle) * ORBIT_RADIUS;
 
-    let tooltipPosition = "right"; // default
+      // Determine Quadrant for Tooltip Placement
+      let quadrant = "right";
 
-    // Top Quadrant (approx 225 to 315) -> Tooltip Top
-    if (degrees >= 225 && degrees < 315) tooltipPosition = "top";
-    // Right Quadrant (approx 315 to 45) -> Tooltip Right
-    else if (degrees >= 315 || degrees < 45) tooltipPosition = "right";
-    // Bottom Quadrant (approx 45 to 135) -> Tooltip Bottom
-    else if (degrees >= 45 && degrees < 135) tooltipPosition = "bottom";
-    // Left Quadrant (approx 135 to 225) -> Tooltip Left
-    else if (degrees >= 135 && degrees < 225) tooltipPosition = "left";
+      // Use angular sectors for better precision
+      if (Math.abs(y) > Math.abs(x)) {
+        quadrant = y < 0 ? "top" : "bottom";
+      } else {
+        quadrant = x < 0 ? "left" : "right";
+      }
 
-    return { ...skill, x, y, angle, tooltipPosition };
-  });
+      return {
+        ...skill,
+        x,
+        y,
+        angle,
+        quadrant,
+      };
+    });
+  }, [ORBIT_RADIUS, isMobile]);
+
+  // Helper to get tooltip position styles
+  const getTooltipProps = (quadrant: string) => {
+    const offset = 25; // Increased offset
+    switch (quadrant) {
+      case "top":
+        return {
+          style: { bottom: "100%", left: "50%" },
+          x: "-50%",
+          y: -offset,
+        };
+      case "bottom":
+        return {
+          style: { top: "100%", left: "50%" },
+          x: "-50%",
+          y: offset,
+        };
+      case "left":
+        return {
+          style: { right: "100%", top: "50%" },
+          x: -offset,
+          y: "-50%",
+        };
+      case "right":
+        return {
+          style: { left: "100%", top: "50%" },
+          x: offset,
+          y: "-50%",
+        };
+      default:
+        return {
+          style: { left: "100%", top: "50%" },
+          x: offset,
+          y: "-50%",
+        };
+    }
+  };
+
+  const centerX = dimensions.width / 2;
+  const centerY = dimensions.height / 2;
 
   return (
-    <div className="relative w-full h-[600px] md:h-[800px] bg-slate-900/50 rounded-xl border border-slate-800 flex items-center justify-center overflow-visible">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.15)_0%,transparent_70%)] rounded-xl overflow-hidden pointer-events-none" />
+    <div
+      ref={containerRef}
+      className={`relative w-full flex items-center justify-center overflow-hidden bg-slate-950/50 rounded-3xl border border-slate-800/50 ${
+        isMobile ? "h-auto py-10 min-h-[600px]" : "h-[600px] md:h-[800px]"
+      }`}
+    >
+      {/* Background Ambient Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.08)_0%,transparent_70%)] pointer-events-none z-0" />
 
-      {/* Central Hub */}
-      <motion.div
-        initial={{ scale: 0 }}
-        whileInView={{ scale: 1 }}
-        className="absolute z-20"
+      {/* Neural Lines Layer (SVG) - Desktop/Tablet Only */}
+      {!isMobile && dimensions.width > 0 && (
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible"
+          viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+        >
+          <defs>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(6,182,212,0.1)" />
+              <stop offset="50%" stopColor="rgba(6,182,212,0.5)" />
+              <stop offset="100%" stopColor="rgba(139,92,246,0.5)" />
+            </linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          {nodes.map((node, i) => {
+            const cos = Math.cos(node.angle);
+            const sin = Math.sin(node.angle);
+
+            // Calculate start and end points for the line
+            // Start at center node edge
+            const startX = centerX + cos * CENTER_RADIUS;
+            const startY = centerY + sin * CENTER_RADIUS;
+            // End at child node edge
+            const endX = centerX + cos * (ORBIT_RADIUS - NODE_RADIUS);
+            const endY = centerY + sin * (ORBIT_RADIUS - NODE_RADIUS);
+
+            return (
+              <motion.g key={`line-${i}`}>
+                <motion.line
+                  x1={startX}
+                  y1={startY}
+                  x2={endX}
+                  y2={endY}
+                  stroke="url(#lineGradient)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 1.5, delay: i * 0.1 }}
+                  filter="url(#glow)"
+                />
+                {/* Traveling Pulse */}
+                <motion.circle
+                  r="3"
+                  fill="#fff"
+                  initial={{ offsetDistance: "0%" }}
+                  animate={{
+                    cx: [startX, endX],
+                    cy: [startY, endY],
+                    opacity: [0, 1, 1, 0], // Fade in -> stay -> fade out
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: i * 0.5,
+                    ease: "linear",
+                  }}
+                />
+              </motion.g>
+            );
+          })}
+        </svg>
+      )}
+
+      {/* Container for Nodes */}
+      <div
+        className={`relative z-20 ${
+          isMobile
+            ? "flex flex-col gap-6 items-center w-full px-4"
+            : "w-full h-full"
+        }`}
       >
-        <div className="w-24 h-24 md:w-32 md:h-32 bg-cyan-950/90 rounded-full border-4 border-cyan-500 flex items-center justify-center shadow-[0_0_50px_rgba(6,182,212,0.6)] relative group cursor-default">
-          <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-ping" />
-          <span className="text-cyan-50 text-lg md:text-xl font-bold font-mono tracking-wider text-center leading-tight">
-            AI / ML
-          </span>
-        </div>
-      </motion.div>
+        {/* Central Hub */}
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", duration: 1 }}
+          className={`${
+            isMobile
+              ? "relative mb-8"
+              : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          } z-20`}
+        >
+          <div
+            className="relative flex items-center justify-center rounded-full bg-slate-950 border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.6)]"
+            style={{ width: CENTER_RADIUS * 2, height: CENTER_RADIUS * 2 }}
+          >
+            <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-ping opacity-20" />
+            <div className="text-center z-10 flex flex-col items-center justify-center">
+              <span className="block text-cyan-50 font-bold font-mono tracking-wider text-base md:text-xl">
+                AI / ML
+              </span>
+              <span className="block text-[10px] text-cyan-400 font-mono mt-0.5 tracking-widest">
+                CORE
+              </span>
+            </div>
+          </div>
+        </motion.div>
 
-      {/* Nodes & Lines */}
-      {nodes.map((node, i) => {
-        // Line Endpoints
-        const centerHubRadius = isMobile ? 48 : 64;
-        // Mobile node is w-20 (80px) -> radius 40. Desktop w-24 (96px) -> radius 48.
-        const nodeRadius = isMobile ? 40 : 48;
+        {/* Child Nodes */}
+        {nodes.map((node, i) => {
+          const tooltipProps = !isMobile
+            ? getTooltipProps(node.quadrant)
+            : null;
 
-        const lineStartX = Math.cos(node.angle) * centerHubRadius;
-        const lineStartY = Math.sin(node.angle) * centerHubRadius;
-        const lineEndX = Math.cos(node.angle) * (radius - nodeRadius);
-        const lineEndY = Math.sin(node.angle) * (radius - nodeRadius);
-
-        return (
-          <React.Fragment key={node.category}>
-            {/* Connection Line */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible">
-              <defs>
-                <filter
-                  id="glow-line"
-                  x="-20%"
-                  y="-20%"
-                  width="140%"
-                  height="140%"
-                >
-                  <feGaussianBlur stdDeviation="2" result="blur" />
-                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-              </defs>
-              <motion.line
-                x1={`calc(50% + ${lineStartX}px)`}
-                y1={`calc(50% + ${lineStartY}px)`}
-                x2={`calc(50% + ${lineEndX}px)`}
-                y2={`calc(50% + ${lineEndY}px)`}
-                stroke="#06b6d4"
-                strokeWidth="2"
-                strokeOpacity="0.6"
-                filter="url(#glow-line)"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                transition={{ duration: 1, delay: 0.5 }}
-              />
-            </svg>
-
-            {/* Category Node */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.1 + 0.5 }}
+          return (
+            <div
+              key={node.category}
+              className={`${
+                isMobile
+                  ? "relative w-full max-w-sm"
+                  : "absolute top-1/2 left-1/2"
+              } transition-all duration-300`}
               style={{
-                position: "absolute",
-                top: `calc(50% + ${node.y}px)`,
-                left: `calc(50% + ${node.x}px)`,
-                transform: "translate(-50%, -50%)",
+                zIndex: hoveredIndex === i ? 50 : 30,
+                ...(!isMobile
+                  ? {
+                      transform: `translate(calc(-50% + ${node.x}px), calc(-50% + ${node.y}px))`,
+                    }
+                  : {}),
               }}
-              className="z-10"
-              onMouseEnter={() => setHoveredIndex(i)}
-              onMouseLeave={() => setHoveredIndex(null)}
+              onMouseEnter={!isMobile ? () => setHoveredIndex(i) : undefined}
+              onMouseLeave={!isMobile ? () => setHoveredIndex(null) : undefined}
             >
-              <div className="relative group cursor-pointer">
-                <div className="w-20 h-20 md:w-24 md:h-24 bg-slate-900 rounded-full border-2 border-violet-500/50 flex items-center justify-center hover:bg-violet-900/80 hover:border-violet-400 transition-all duration-300 z-10 relative shadow-[0_0_20px_rgba(139,92,246,0.2)] group-hover:shadow-[0_0_30px_rgba(139,92,246,0.6)]">
-                  <span className="text-[10px] md:text-xs text-center text-violet-100 font-mono font-semibold px-2 leading-tight">
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: i * 0.1 + 0.5, type: "spring" }}
+                whileHover={!isMobile ? { scale: 1.1 } : {}}
+                className={`relative cursor-pointer group ${
+                  isMobile
+                    ? "flex items-center gap-4 bg-slate-900/40 p-3 rounded-xl border border-slate-800"
+                    : ""
+                }`}
+              >
+                {/* Node Circle */}
+                <div
+                  className={`
+                    flex items-center justify-center rounded-full bg-slate-950 
+                    border-2 border-violet-500/60 group-hover:border-violet-400 group-hover:bg-slate-900
+                    shadow-[0_0_20px_rgba(139,92,246,0.2)] group-hover:shadow-[0_0_35px_rgba(139,92,246,0.6)]
+                    transition-all duration-300 shrink-0
+                  `}
+                  style={{ width: NODE_RADIUS * 2, height: NODE_RADIUS * 2 }}
+                >
+                  <span className="text-[10px] md:text-[11px] text-center text-violet-100 font-mono font-bold px-2 leading-tight tracking-tight">
                     {node.category}
                   </span>
                 </div>
 
-                {/* Orbiting Ring Effect */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-40 md:h-40 border border-dashed border-cyan-500/30 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 scale-50 group-hover:scale-100 pointer-events-none animate-spin-slow" />
+                {/* Mobile: Inline Content */}
+                {isMobile && (
+                  <div className="flex-1">
+                    <div className="flex flex-wrap gap-1.5">
+                      {node.items.slice(0, 4).map((item) => (
+                        <span
+                          key={item}
+                          className="text-[10px] bg-slate-800 text-cyan-100 px-2 py-0.5 rounded border border-slate-700"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                      {node.items.length > 4 && (
+                        <span className="text-[10px] text-slate-400 px-1">
+                          +{node.items.length - 4}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
 
-                {/* Dynamic Tooltip */}
-                <AnimatePresence>
-                  {hoveredIndex === i && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.2 }}
-                      className={`absolute w-56 md:w-64 bg-slate-900/95 border border-cyan-500/50 p-4 rounded-xl z-50 backdrop-blur-xl shadow-2xl pointer-events-none
-                        ${
-                          node.tooltipPosition === "right"
-                            ? "left-full top-1/2 -translate-y-1/2 ml-4"
-                            : ""
-                        }
-                        ${
-                          node.tooltipPosition === "left"
-                            ? "right-full top-1/2 -translate-y-1/2 mr-4"
-                            : ""
-                        }
-                        ${
-                          node.tooltipPosition === "top"
-                            ? "bottom-full left-1/2 -translate-x-1/2 mb-4"
-                            : ""
-                        }
-                        ${
-                          node.tooltipPosition === "bottom"
-                            ? "top-full left-1/2 -translate-x-1/2 mt-4"
-                            : ""
-                        }
-                      `}
-                    >
-                      <h4 className="text-cyan-400 text-xs font-bold mb-2 uppercase tracking-widest border-b border-cyan-500/20 pb-1">
-                        Stack
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {node.items.map((item) => (
-                          <span
-                            key={item}
-                            className="text-[10px] md:text-xs bg-cyan-950 text-cyan-200 px-2 py-1 rounded border border-cyan-800/50"
-                          >
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          </React.Fragment>
-        );
-      })}
+                {/* Desktop/Tablet: Hover Card */}
+                {!isMobile && tooltipProps && (
+                  <AnimatePresence>
+                    {hoveredIndex === i && (
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          scale: 0.9,
+                          x: tooltipProps.x,
+                          y: tooltipProps.y,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          scale: 1,
+                          x: tooltipProps.x,
+                          y: tooltipProps.y,
+                        }}
+                        exit={{
+                          opacity: 0,
+                          scale: 0.9,
+                          x: tooltipProps.x,
+                          y: tooltipProps.y,
+                        }}
+                        transition={{ duration: 0.2 }}
+                        style={{
+                          position: "absolute",
+                          ...tooltipProps.style,
+                          zIndex: 50,
+                        }}
+                        className="w-64 bg-slate-900/95 backdrop-blur-xl border border-cyan-500/30 p-4 rounded-xl shadow-2xl pointer-events-none"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 rounded-xl" />
+                        <h4 className="relative text-cyan-400 text-xs font-bold mb-3 uppercase tracking-widest border-b border-cyan-500/20 pb-2">
+                          {node.category} Stack
+                        </h4>
+                        <div className="relative flex flex-wrap gap-2">
+                          {node.items.map((item) => (
+                            <span
+                              key={item}
+                              className="text-[10px] bg-slate-800/80 text-cyan-100 px-2 py-1 rounded border border-slate-700/50 shadow-sm"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                )}
+              </motion.div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
