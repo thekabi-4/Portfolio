@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Scene3D from "./components/Scene3D";
 import CustomCursor from "./components/CustomCursor";
 import Section from "./components/Section";
 import ProjectCard from "./components/ProjectCard";
-import Chatbot from "./components/Chatbot";
 import Modal from "./components/Modal";
-import Terminal from "./components/Terminal";
-import CoreModules from "./components/CoreModules";
 import SkillNetwork from "./components/SkillNetwork";
-import ValidationStack from "./components/ValidationStack";
-import ModularFooter from "./components/ModularFooter";
+
+// Lazy Load Heavy Components
+const Scene3D = React.lazy(() => import("./components/Scene3D"));
+const Terminal = React.lazy(() => import("./components/Terminal"));
+const CoreModules = React.lazy(() => import("./components/CoreModules"));
+const ValidationStack = React.lazy(
+  () => import("./components/ValidationStack")
+);
+const ModularFooter = React.lazy(() => import("./components/ModularFooter"));
+const Chatbot = React.lazy(() => import("./components/Chatbot"));
+
+// Loading Fallback
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center p-8">
+    <div className="w-8 h-8 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
+  </div>
+);
 import {
   PERSONAL_INFO,
   WHAT_I_DO,
@@ -65,7 +76,9 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200 cursor-none">
       <CustomCursor />
-      <Scene3D />
+      <Suspense fallback={null}>
+        <Scene3D />
+      </Suspense>
       <Navbar />
 
       <main className="relative">
@@ -81,7 +94,9 @@ const App: React.FC = () => {
         <Section id="about" title="System Kernel">
           <div className="grid md:grid-cols-3 gap-8 items-start">
             <div className="md:col-span-2">
-              <Terminal />
+              <Suspense fallback={<LoadingSpinner />}>
+                <Terminal />
+              </Suspense>
 
               <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-700">
@@ -306,14 +321,20 @@ const App: React.FC = () => {
 
         {/* Certifications & Achievements Section */}
         <Section id="certifications" title="Validation Metrics">
-          <ValidationStack />
+          <Suspense fallback={<LoadingSpinner />}>
+            <ValidationStack />
+          </Suspense>
         </Section>
 
         {/* Contact Footer */}
-        <ModularFooter />
+        <Suspense fallback={<LoadingSpinner />}>
+          <ModularFooter />
+        </Suspense>
 
         {/* Chatbot Overlay */}
-        <Chatbot />
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
 
         {/* Project Modal */}
         <Modal
