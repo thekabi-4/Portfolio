@@ -12,6 +12,7 @@ import Terminal from "./components/Terminal";
 import CoreModules from "./components/CoreModules";
 import SkillNetwork from "./components/SkillNetwork";
 import ValidationStack from "./components/ValidationStack";
+import ModularFooter from "./components/ModularFooter";
 import {
   PERSONAL_INFO,
   WHAT_I_DO,
@@ -309,52 +310,7 @@ const App: React.FC = () => {
         </Section>
 
         {/* Contact Footer */}
-        <footer
-          id="contact"
-          className="bg-slate-900/80 border-t border-slate-800 pt-16 pb-8"
-        >
-          <div className="max-w-7xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-white mb-8 font-mono">
-              &lt;Initiate_Handshake /&gt;
-            </h2>
-            <div className="flex justify-center gap-8 mb-12 flex-wrap">
-              <div className="flex flex-col items-center gap-2 group">
-                <div className="p-4 bg-slate-800 rounded-full group-hover:bg-cyan-900/30 transition-colors">
-                  <Mail className="w-6 h-6 text-cyan-400" />
-                </div>
-                <span className="text-gray-400 text-sm">
-                  {PERSONAL_INFO.email}
-                </span>
-              </div>
-              <div className="flex flex-col items-center gap-2 group">
-                <div className="p-4 bg-slate-800 rounded-full group-hover:bg-cyan-900/30 transition-colors">
-                  <Phone className="w-6 h-6 text-cyan-400" />
-                </div>
-                <span className="text-gray-400 text-sm">
-                  {PERSONAL_INFO.phone}
-                </span>
-              </div>
-              <div className="flex flex-col items-center gap-2 group">
-                <div className="p-4 bg-slate-800 rounded-full group-hover:bg-cyan-900/30 transition-colors">
-                  <MapPin className="w-6 h-6 text-cyan-400" />
-                </div>
-                <span className="text-gray-400 text-sm max-w-xs">
-                  {PERSONAL_INFO.address}
-                </span>
-              </div>
-            </div>
-
-            <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-400 text-sm">
-              <p>
-                &copy; {new Date().getFullYear()} Kabilesh Naveenkumar. All
-                rights reserved.
-              </p>
-              <p>
-                Designed with <span className="text-red-500">♥</span> & AI
-              </p>
-            </div>
-          </div>
-        </footer>
+        <ModularFooter />
 
         {/* Chatbot Overlay */}
         <Chatbot />
