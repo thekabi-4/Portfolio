@@ -9,8 +9,9 @@ import ProjectCard from "./components/ProjectCard";
 import Chatbot from "./components/Chatbot";
 import Modal from "./components/Modal";
 import Terminal from "./components/Terminal";
-import HolographicCard from "./components/HolographicCard";
+import CoreModules from "./components/CoreModules";
 import SkillNetwork from "./components/SkillNetwork";
+import ValidationStack from "./components/ValidationStack";
 import {
   PERSONAL_INFO,
   WHAT_I_DO,
@@ -19,6 +20,7 @@ import {
   PROJECTS,
   CERTIFICATIONS,
   EDUCATION,
+  ACHIEVEMENTS,
 } from "./constants";
 import {
   Brain,
@@ -166,17 +168,7 @@ const App: React.FC = () => {
           subtitle="Bridging Intelligence and Engineering"
           className="bg-slate-900/30"
         >
-          <div className="grid md:grid-cols-3 gap-6">
-            {WHAT_I_DO.map((item, idx) => (
-              <HolographicCard
-                key={idx}
-                title={item.title}
-                description={item.description}
-                index={idx}
-                className={idx === 0 || idx === 3 ? "md:col-span-2" : ""}
-              />
-            ))}
-          </div>
+          <CoreModules />
         </Section>
 
         {/* Skills Section */}
@@ -313,60 +305,7 @@ const App: React.FC = () => {
 
         {/* Certifications & Achievements Section */}
         <Section id="certifications" title="Validation Metrics">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              {CERTIFICATIONS.map((cert, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-start gap-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700/50 hover:border-cyan-500/30 transition-colors"
-                >
-                  <div className="p-2 bg-slate-800 rounded-full text-cyan-400">
-                    <Award className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-200">{cert.name}</h4>
-                    <p className="text-sm text-gray-400 font-mono">
-                      {cert.issuer} // {cert.date}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="bg-gradient-to-br from-violet-900/20 to-slate-900/50 p-6 rounded-2xl border border-violet-500/20">
-              <h3 className="text-xl font-bold text-white mb-4">
-                System Achievements
-              </h3>
-              <div className="space-y-6">
-                <div className="relative pl-4 border-l-2 border-cyan-500/30">
-                  <h4 className="font-bold text-cyan-400 mb-1">
-                    24-Hour Codeathon Record
-                  </h4>
-                  <p className="text-sm text-gray-300">
-                    Group World Record Participant recognized by Kalam's World
-                    Records (June 2024).
-                  </p>
-                </div>
-                <div className="relative pl-4 border-l-2 border-cyan-500/30">
-                  <h4 className="font-bold text-cyan-400 mb-1">
-                    World Book of Records Event
-                  </h4>
-                  <p className="text-sm text-gray-300">
-                    Coordinated and submitted official documentation for Macro
-                    Vision Academy to the World Book of Records, London.
-                  </p>
-                </div>
-                <div className="relative pl-4 border-l-2 border-violet-500/30">
-                  <h4 className="font-bold text-violet-400 mb-1">
-                    Rehabionics Seed Funding
-                  </h4>
-                  <p className="text-sm text-gray-300">
-                    Successfully pitched and raised ₹1 Lakh seed funding for
-                    medical IoT innovation.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ValidationStack />
         </Section>
 
         {/* Contact Footer */}

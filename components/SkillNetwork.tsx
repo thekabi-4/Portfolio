@@ -2,6 +2,27 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SKILLS } from "../constants";
 
+// Tooltip Component with Auto-Scroll
+const Tooltip = ({ children, ...props }: any) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest",
+      });
+    }
+  }, []);
+
+  return (
+    <motion.div ref={ref} {...props}>
+      {children}
+    </motion.div>
+  );
+};
+
 const SkillNetwork = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -61,7 +82,13 @@ const SkillNetwork = () => {
     return SKILLS.map((skill, index) => {
       if (isMobile) {
         // Mobile: Stacked Layout (No radial calculation needed)
-        return { ...skill, x: 0, y: 0, angle: 0, quadrant: "center" };
+        return {
+          ...skill,
+          x: 0,
+          y: 0,
+          angle: 0,
+          quadrant: "center",
+        };
       }
 
       // Radial Layout
@@ -87,7 +114,7 @@ const SkillNetwork = () => {
         quadrant,
       };
     });
-  }, [ORBIT_RADIUS, isMobile]);
+  }, [ORBIT_RADIUS, isMobile, dimensions.width]);
 
   // Helper to get tooltip position styles
   const getTooltipProps = (quadrant: string) => {
@@ -126,250 +153,235 @@ const SkillNetwork = () => {
     }
   };
 
-  const centerX = dimensions.width / 2;
-  const centerY = dimensions.height / 2;
-
   return (
     <div
       ref={containerRef}
-      className={`relative w-full flex items-center justify-center overflow-hidden bg-slate-950/50 rounded-3xl border border-slate-800/50 ${
-        isMobile ? "h-auto py-10 min-h-[600px]" : "h-[600px] md:h-[800px]"
+      className={`relative w-full ${
+        isMobile ? "h-auto min-h-[600px]" : "h-[600px] md:h-[800px]"
       }`}
     >
-      {/* Background Ambient Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.08)_0%,transparent_70%)] pointer-events-none z-0" />
+      {/* Background & Border Layer (Clipped) */}
+      <div className="absolute inset-0 rounded-3xl border border-slate-800/50 bg-slate-950/50 overflow-hidden z-0">
+        {/* Background Ambient Glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.08)_0%,transparent_70%)] pointer-events-none" />
+      </div>
 
-      {/* Neural Lines Layer (SVG) - Desktop/Tablet Only */}
-      {!isMobile && dimensions.width > 0 && (
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible"
-          viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-        >
-          <defs>
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(6,182,212,0.1)" />
-              <stop offset="50%" stopColor="rgba(6,182,212,0.5)" />
-              <stop offset="100%" stopColor="rgba(139,92,246,0.5)" />
-            </linearGradient>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
-          {nodes.map((node, i) => {
-            const cos = Math.cos(node.angle);
-            const sin = Math.sin(node.angle);
-
-            // Calculate start and end points for the line
-            // Start at center node edge
-            const startX = centerX + cos * CENTER_RADIUS;
-            const startY = centerY + sin * CENTER_RADIUS;
-            // End at child node edge
-            const endX = centerX + cos * (ORBIT_RADIUS - NODE_RADIUS);
-            const endY = centerY + sin * (ORBIT_RADIUS - NODE_RADIUS);
-
-            return (
-              <motion.g key={`line-${i}`}>
-                <motion.line
-                  x1={startX}
-                  y1={startY}
-                  x2={endX}
-                  y2={endY}
-                  stroke="url(#lineGradient)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 1.5, delay: i * 0.1 }}
-                  filter="url(#glow)"
-                />
-                {/* Traveling Pulse */}
-                <motion.circle
-                  r="3"
-                  fill="#fff"
-                  initial={{ offsetDistance: "0%" }}
-                  animate={{
-                    cx: [startX, endX],
-                    cy: [startY, endY],
-                    opacity: [0, 1, 1, 0], // Fade in -> stay -> fade out
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    delay: i * 0.5,
-                    ease: "linear",
-                  }}
-                />
-              </motion.g>
-            );
-          })}
-        </svg>
-      )}
-
-      {/* Container for Nodes */}
+      {/* Content Layer (Visible Overflow for Tooltips) */}
       <div
-        className={`relative z-20 ${
-          isMobile
-            ? "flex flex-col gap-6 items-center w-full px-4"
-            : "w-full h-full"
+        className={`relative w-full h-full flex items-center justify-center z-20 ${
+          isMobile ? "py-10" : ""
         }`}
       >
-        {/* Central Hub */}
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", duration: 1 }}
-          className={`${
-            isMobile
-              ? "relative mb-8"
-              : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          } z-20`}
+        {/* Container for Nodes and Lines */}
+        <div
+          className={`relative w-full h-full ${
+            isMobile ? "flex flex-col gap-6 items-center px-4" : ""
+          }`}
         >
-          <div
-            className="relative flex items-center justify-center rounded-full bg-slate-950 border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.6)]"
-            style={{ width: CENTER_RADIUS * 2, height: CENTER_RADIUS * 2 }}
-          >
-            <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-ping opacity-20" />
-            <div className="text-center z-10 flex flex-col items-center justify-center">
-              <span className="block text-cyan-50 font-bold font-mono tracking-wider text-base md:text-xl">
-                AI / ML
-              </span>
-              <span className="block text-[10px] text-cyan-400 font-mono mt-0.5 tracking-widest">
-                CORE
-              </span>
-            </div>
-          </div>
-        </motion.div>
+          {/* CSS Lines Layer - Desktop/Tablet Only */}
+          {!isMobile &&
+            nodes.map((node, i) => {
+              const lineLength = ORBIT_RADIUS - NODE_RADIUS - CENTER_RADIUS;
 
-        {/* Child Nodes */}
-        {nodes.map((node, i) => {
-          const tooltipProps = !isMobile
-            ? getTooltipProps(node.quadrant)
-            : null;
-
-          return (
-            <div
-              key={node.category}
-              className={`${
-                isMobile
-                  ? "relative w-full max-w-sm"
-                  : "absolute top-1/2 left-1/2"
-              } transition-all duration-300`}
-              style={{
-                zIndex: hoveredIndex === i ? 50 : 30,
-                ...(!isMobile
-                  ? {
-                      transform: `translate(calc(-50% + ${node.x}px), calc(-50% + ${node.y}px))`,
-                    }
-                  : {}),
-              }}
-              onMouseEnter={!isMobile ? () => setHoveredIndex(i) : undefined}
-              onMouseLeave={!isMobile ? () => setHoveredIndex(null) : undefined}
-            >
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: i * 0.1 + 0.5, type: "spring" }}
-                whileHover={!isMobile ? { scale: 1.1 } : {}}
-                className={`relative cursor-pointer group ${
-                  isMobile
-                    ? "flex items-center gap-4 bg-slate-900/40 p-3 rounded-xl border border-slate-800"
-                    : ""
-                }`}
-              >
-                {/* Node Circle */}
+              return (
                 <div
-                  className={`
+                  key={`line-${i}`}
+                  className="absolute left-1/2 top-1/2 h-[2px] origin-left z-10 pointer-events-none"
+                  style={{
+                    width: `${lineLength}px`,
+                    transform: `rotate(${node.angle}rad) translate(${CENTER_RADIUS}px, -50%)`,
+                    background:
+                      "linear-gradient(90deg, rgba(6,182,212,0.1) 0%, rgba(6,182,212,0.5) 50%, rgba(139,92,246,0.5) 100%)",
+                  }}
+                >
+                  {/* Traveling Pulse */}
+                  <motion.div
+                    className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+                    initial={{ left: "0%", opacity: 0 }}
+                    animate={{
+                      left: ["0%", "100%"],
+                      opacity: [0, 1, 1, 0],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      delay: i * 0.5,
+                      ease: "linear",
+                    }}
+                  />
+                </div>
+              );
+            })}
+
+          {/* Central Hub */}
+          <div
+            className={`${
+              isMobile
+                ? "relative mb-8"
+                : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            } z-20`}
+            style={
+              !isMobile
+                ? {
+                    left: "50%",
+                    top: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }
+                : {}
+            }
+          >
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", duration: 1 }}
+            >
+              <div
+                className="relative flex items-center justify-center rounded-full bg-slate-950 border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.6)]"
+                style={{ width: CENTER_RADIUS * 2, height: CENTER_RADIUS * 2 }}
+              >
+                <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-ping opacity-20" />
+                <div className="text-center z-10 flex flex-col items-center justify-center">
+                  <span className="block text-cyan-50 font-bold font-mono tracking-wider text-base md:text-xl">
+                    AI / ML
+                  </span>
+                  <span className="block text-[10px] text-cyan-400 font-mono mt-0.5 tracking-widest">
+                    CORE
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Child Nodes */}
+          {nodes.map((node, i) => {
+            const tooltipProps = !isMobile
+              ? getTooltipProps(node.quadrant)
+              : null;
+
+            return (
+              <div
+                key={node.category}
+                className={`${
+                  isMobile
+                    ? "relative w-full max-w-sm"
+                    : "absolute top-1/2 left-1/2"
+                } transition-all duration-300`}
+                style={{
+                  zIndex: hoveredIndex === i ? 50 : 30,
+                  ...(!isMobile
+                    ? {
+                        left: "50%",
+                        top: "50%",
+                        transform: `translate(calc(-50% + ${node.x}px), calc(-50% + ${node.y}px))`,
+                      }
+                    : {}),
+                }}
+                onMouseEnter={!isMobile ? () => setHoveredIndex(i) : undefined}
+                onMouseLeave={
+                  !isMobile ? () => setHoveredIndex(null) : undefined
+                }
+              >
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: i * 0.1 + 0.5, type: "spring" }}
+                  whileHover={!isMobile ? { scale: 1.1 } : {}}
+                  className={`relative cursor-pointer group ${
+                    isMobile
+                      ? "flex items-center gap-4 bg-slate-900/40 p-3 rounded-xl border border-slate-800"
+                      : ""
+                  }`}
+                >
+                  {/* Node Circle */}
+                  <div
+                    className={`
                     flex items-center justify-center rounded-full bg-slate-950 
                     border-2 border-violet-500/60 group-hover:border-violet-400 group-hover:bg-slate-900
                     shadow-[0_0_20px_rgba(139,92,246,0.2)] group-hover:shadow-[0_0_35px_rgba(139,92,246,0.6)]
                     transition-all duration-300 shrink-0
                   `}
-                  style={{ width: NODE_RADIUS * 2, height: NODE_RADIUS * 2 }}
-                >
-                  <span className="text-[10px] md:text-[11px] text-center text-violet-100 font-mono font-bold px-2 leading-tight tracking-tight">
-                    {node.category}
-                  </span>
-                </div>
-
-                {/* Mobile: Inline Content */}
-                {isMobile && (
-                  <div className="flex-1">
-                    <div className="flex flex-wrap gap-1.5">
-                      {node.items.slice(0, 4).map((item) => (
-                        <span
-                          key={item}
-                          className="text-[10px] bg-slate-800 text-cyan-100 px-2 py-0.5 rounded border border-slate-700"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                      {node.items.length > 4 && (
-                        <span className="text-[10px] text-slate-400 px-1">
-                          +{node.items.length - 4}
-                        </span>
-                      )}
-                    </div>
+                    style={{ width: NODE_RADIUS * 2, height: NODE_RADIUS * 2 }}
+                  >
+                    <span className="text-[10px] md:text-[11px] text-center text-violet-100 font-mono font-bold px-2 leading-tight tracking-tight">
+                      {node.category}
+                    </span>
                   </div>
-                )}
 
-                {/* Desktop/Tablet: Hover Card */}
-                {!isMobile && tooltipProps && (
-                  <AnimatePresence>
-                    {hoveredIndex === i && (
-                      <motion.div
-                        initial={{
-                          opacity: 0,
-                          scale: 0.9,
-                          x: tooltipProps.x,
-                          y: tooltipProps.y,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          scale: 1,
-                          x: tooltipProps.x,
-                          y: tooltipProps.y,
-                        }}
-                        exit={{
-                          opacity: 0,
-                          scale: 0.9,
-                          x: tooltipProps.x,
-                          y: tooltipProps.y,
-                        }}
-                        transition={{ duration: 0.2 }}
-                        style={{
-                          position: "absolute",
-                          ...tooltipProps.style,
-                          zIndex: 50,
-                        }}
-                        className="w-64 bg-slate-900/95 backdrop-blur-xl border border-cyan-500/30 p-4 rounded-xl shadow-2xl pointer-events-none"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 rounded-xl" />
-                        <h4 className="relative text-cyan-400 text-xs font-bold mb-3 uppercase tracking-widest border-b border-cyan-500/20 pb-2">
-                          {node.category} Stack
-                        </h4>
-                        <div className="relative flex flex-wrap gap-2">
-                          {node.items.map((item) => (
-                            <span
-                              key={item}
-                              className="text-[10px] bg-slate-800/80 text-cyan-100 px-2 py-1 rounded border border-slate-700/50 shadow-sm"
-                            >
-                              {item}
-                            </span>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                )}
-              </motion.div>
-            </div>
-          );
-        })}
+                  {/* Mobile: Inline Content */}
+                  {isMobile && (
+                    <div className="flex-1">
+                      <div className="flex flex-wrap gap-1.5">
+                        {node.items.slice(0, 4).map((item) => (
+                          <span
+                            key={item}
+                            className="text-[10px] bg-slate-800 text-cyan-100 px-2 py-0.5 rounded border border-slate-700"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                        {node.items.length > 4 && (
+                          <span className="text-[10px] text-slate-400 px-1">
+                            +{node.items.length - 4}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Desktop/Tablet: Hover Card */}
+                  {!isMobile && tooltipProps && (
+                    <AnimatePresence>
+                      {hoveredIndex === i && (
+                        <Tooltip
+                          initial={{
+                            opacity: 0,
+                            scale: 0.9,
+                            x: tooltipProps.x,
+                            y: tooltipProps.y,
+                          }}
+                          animate={{
+                            opacity: 1,
+                            scale: 1,
+                            x: tooltipProps.x,
+                            y: tooltipProps.y,
+                          }}
+                          exit={{
+                            opacity: 0,
+                            scale: 0.9,
+                            x: tooltipProps.x,
+                            y: tooltipProps.y,
+                          }}
+                          transition={{ duration: 0.2 }}
+                          style={{
+                            position: "absolute",
+                            ...tooltipProps.style,
+                            zIndex: 50,
+                          }}
+                          className="w-64 bg-slate-900/95 backdrop-blur-xl border border-cyan-500/30 p-4 rounded-xl shadow-2xl pointer-events-none"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 rounded-xl" />
+                          <h4 className="relative text-cyan-400 text-xs font-bold mb-3 uppercase tracking-widest border-b border-cyan-500/20 pb-2">
+                            {node.category} Stack
+                          </h4>
+                          <div className="relative flex flex-wrap gap-2">
+                            {node.items.map((item) => (
+                              <span
+                                key={item}
+                                className="text-[10px] bg-slate-800/80 text-cyan-100 px-2 py-1 rounded border border-slate-700/50 shadow-sm"
+                              >
+                                {item}
+                              </span>
+                            ))}
+                          </div>
+                        </Tooltip>
+                      )}
+                    </AnimatePresence>
+                  )}
+                </motion.div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

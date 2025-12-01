@@ -13,11 +13,11 @@ import {
 export const PERSONAL_INFO = {
   name: "Kabilesh Naveenkumar",
   tagline:
-    "Training Machines. Mentoring People. Building the Future.\nAI/ML | Data Science | Innovation Enthusiast",
-  roles: ["AI/ML Engineer", "Data Scientist", "Innovator", "R&D Lead"],
+    "AI/ML Engineer • Deep-Tech Innovator • Founder – Rehabionics Healthcare Pvt. Ltd.",
+  roles: ["AI/ML Engineer", "Deep-Tech Innovator", "Founder"],
   location: "Coimbatore, Tamil Nadu, India",
   email: "the.kabi2004@gmail.com",
-  phone: "9385585574",
+  phone: "+91 93855 85574",
   linkedin: "https://www.linkedin.com/in/kabilesh-naveenkumar",
   github: "https://github.com/thekabi-4",
   address:
@@ -26,9 +26,7 @@ export const PERSONAL_INFO = {
 
   As Founder of Rehabionics, I lead R&D of next-generation EMG/EMS physiotherapy devices with AI-powered signal processing, real-time analytics, and BLE IoT integration.
 
-  I design scalable AI systems including offline RAG architectures, CV-based surveillance, autonomous robotics, low-resource LLM inference, semantic search engines, and real-world embedded platforms.
-
-  Driven by innovation and purpose, I build technologies that combine AI intelligence + robust engineering to create impact-oriented, scalable, and future-ready solutions.`,
+  I design scalable AI systems including offline RAG architectures, CV-based surveillance, autonomous robotics, low-resource LLM inference, semantic search engines, and real-world embedded platforms. I focus on developing impact-driven, production-grade AI systems that combine intelligence, engineering, and purpose.`,
 };
 
 export const WHAT_I_DO = [
@@ -63,24 +61,33 @@ export const SKILLS: Skill[] = [
   {
     category: "AI/ML & Generative AI",
     items: [
-      "LLMs (Qwen, TinyLlama)",
+      "LLMs",
       "RAG Systems",
-      "PEFT/LoRA/Unsloth",
-      "Quantization (GGUF)",
-      "PyTorch",
-      "TensorFlow",
-      "scikit-learn",
-      "Graph Reasoning",
+      "Transformers",
+      "PEFT/LoRA",
+      "Model Optimisation",
+      "Fine-Tuning",
+      "Hugging Face",
+      "Vector DB",
+      "Chroma DB",
+      "Knowledge Graph",
+      "Generative AI",
+      "Deep Learning",
+      "Classical ML",
+      "Prompt Engineering",
+      "FAISS",
+      "llama.cpp",
+      "State Space Models",
     ],
   },
   {
     category: "NLP & Retrieval",
     items: [
-      "LangChain",
-      "FAISS",
-      "ChromaDB",
-      "Embeddings",
       "TF-IDF",
+      "Word Embeddings",
+      "Language Modelling",
+      "Text Classification",
+      "Pre-processing",
       "SymSpell",
       "LanguageTool",
     ],
@@ -89,46 +96,35 @@ export const SKILLS: Skill[] = [
     category: "Computer Vision",
     items: [
       "YOLOv8",
-      "DeepSORT",
       "OpenCV",
-      "Roboflow",
+      "DeepSORT",
       "OCR",
-      "Real-time Tracking",
+      "Real-Time Video Analytics",
+      "Image Processing",
+      "Detection Pipelines",
     ],
   },
   {
-    category: "Programming & Frameworks",
+    category: "Programming",
     items: [
       "Python",
-      "JavaScript",
-      "SQL",
       "Flask",
       "Streamlit",
-      "FastAPI",
-      "llama.cpp",
-      "Hugging Face",
-    ],
-  },
-  {
-    category: "Data & Visualization",
-    items: [
-      "Pandas",
       "NumPy",
+      "Pandas",
       "Matplotlib",
-      "Seaborn",
-      "Data Cleaning",
-      "Feature Engineering",
+      "Plotly",
+      "SQL",
+      "JavaScript",
     ],
   },
   {
-    category: "Tools & Design",
+    category: "Data Science Tools",
     items: [
-      "Git",
-      "Linux",
-      "VS Code",
-      "PyInstaller",
-      "UI/UX Fundamentals",
-      "System Architecture",
+      "Data Analysis",
+      "Visualization",
+      "Statistical Modelling",
+      "Jupyter Notebook",
     ],
   },
 ];
@@ -141,48 +137,33 @@ export const EXPERIENCE: Experience[] = [
     period: "March 2024 – Present",
     location: "Coimbatore",
     description: [
-      "Lead R&D for affordable, clinically reliable physiotherapy and rehabilitation devices.",
-      "Architect EMG/EMS IoT systems with real-time signal acquisition and therapy modes.",
-      "Direct hardware, firmware, ML, and mobile development teams.",
-      "Ensure compliance with medical standards (IEC 60601-1).",
-      "Manage investor relations, partnerships, and product strategy.",
-      "Developed patentable architectures and circuits.",
+      "Leading R&D for clinically reliable EMG/EMS physiotherapy and rehabilitation devices.",
+      "Architecting end-to-end AI-driven hardware–software systems involving real-time signal processing, embedded platforms, and mobile integration.",
+      "Overseeing hardware, firmware, ML, and app development teams, ensuring alignment with medical standards and product strategy.",
+      "Driving investor communication, partnership development, and patent-focused innovation.",
     ],
   },
   {
     id: 2,
-    role: "Technical Mentor",
+    role: "Data Science Mentor",
     company: "Chronosphere",
     period: "July 2025 – Present",
     location: "Madhya Pradesh",
     description: [
-      "Mentored teams on scalable cloud-native systems and observability best practices.",
-      "Conducted architecture reviews, code audits, and pair programming.",
-      "Created internal documentation and training material for new engineers.",
-      "Assisted in debugging large-scale distributed systems.",
+      "Guide engineering teams on data science projects, courses and observability workflows.",
+      "Conduct code reviews, architecture assessments, and debugging of distributed systems.",
+      "Deliver technical training and learning materials for internal engineering cohorts.",
     ],
   },
   {
     id: 3,
-    role: "Event Lead & POC",
+    role: "Event Lead & Point of Contact",
     company: "Macro Vision Academy",
     period: "2024",
-    location: "Remote/On-site",
+    location: "World Book of Records Event",
     description: [
-      "Led organization of a large-scale coding world record event.",
-      "Acted as the primary point of contact with World Book of Records, London.",
-      "Coordinated communication, verification, documentation, and submission processes.",
-      "Managed event logistics, media proof preparation, and final certification workflow.",
-    ],
-  },
-  {
-    id: 4,
-    role: "Basketball Coach",
-    company: "Suguna PIP School",
-    period: "April 2022 – December 2024",
-    location: "Coimbatore",
-    description: [
-      "Trained student teams, managed coaching schedules, and facilitated tournaments.",
+      "Coordinated end-to-end execution of a large-scale coding world-record attempt.",
+      "Managed communication with World Book of Records, London, including verification, documentation, media proof, and final submission.",
     ],
   },
 ];
@@ -192,57 +173,38 @@ export const PROJECTS: Project[] = [
     id: 1,
     title: "Offline RAG Pipeline",
     category: "Featured",
-    technologies: ["Qwen3-4B", "LoRA", "FAISS", "Flask", "Unsloth"],
-    description:
-      "A production-grade offline Retrieval-Augmented Generation system optimized for 8 GB GPUs.",
+    technologies: ["Qwen3-4B", "LoRA", "FAISS", "Flask", "SymSpell"],
+    description: "Production-grade offline RAG system optimized for 8 GB GPUs.",
     details: [
-      "Integrated Qwen3-4B in 4-bit precision with custom LoRA adapters trained using Unsloth.",
-      "Implemented semantic retrieval using FAISS for large educational datasets.",
-      "Added automated query correction, grammar refinement, and context-aware generation.",
-      "Provided Flask API endpoints with health checks, CORS, and streaming responses.",
-      "Designed for complete offline execution without external API dependency.",
+      "Integrated Qwen3-4B in 4-bit precision with custom LoRA adapters (trained via Unsloth).",
+      "Implemented semantic retrieval using FAISS and automated grammar/spell correction.",
+      "Built Flask APIs with CORS, health checks, and streaming responses.",
+      "Designed for complete offline execution with no external API dependencies.",
     ],
     link: "#",
     github: "https://github.com/thekabi-4",
   },
   {
     id: 2,
-    title: "Small Language Model RAG",
+    title: "Real-Time Accident Detection",
     category: "Featured",
-    technologies: ["TinyLlama", "llama.cpp", "FAISS", "Colab"],
+    technologies: ["YOLOv8", "DeepSORT", "OpenCV", "TensorFlow", "OCR"],
     description:
-      "Lightweight RAG pipeline for educational Q&A, optimized for low-resource environments.",
+      "Computer vision system detecting accidents in real time from CCTV feeds.",
     details: [
-      "Performed semantic search, answer-type classification, and grammar correction.",
-      "Generated structured responses based on educational marking schemes.",
-      "Built for seamless execution in Google Colab with minimal hardware requirements.",
-      "Utilized TinyLlama GGUF models via llama.cpp for efficient inference.",
+      "Handled multi-camera grid, crash detection, vehicle tracking, and number plate recognition.",
+      "Logged incidents for emergency response and reporting.",
     ],
     link: "#",
     github: "https://github.com/thekabi-4",
   },
   {
     id: 3,
-    title: "Real-Time Accident Detection",
-    category: "Featured",
-    technologies: ["YOLOv8", "DeepSORT", "OpenCV", "TensorFlow", "Flask"],
-    description:
-      "AI-powered traffic surveillance system detecting accidents in real time.",
-    details: [
-      "Streamed multiple CCTV feeds in a unified monitoring grid.",
-      "Performed accident detection, vehicle tracking, and license plate recognition (OCR).",
-      "Logged incidents with metadata for emergency response and reporting.",
-    ],
-    link: "#",
-    github: "https://github.com/thekabi-4",
-  },
-  {
-    id: 4,
     title: "Drone-Disinfectant System",
     category: "Featured",
     technologies: ["YOLOv8", "Roboflow", "OpenCV", "JS", "HTML/CSS"],
     description:
-      "AI-powered drone automation system for detecting potholes and mosquito-prone zones.",
+      "AI-powered drone automation system for targeted disinfectant spraying.",
     details: [
       "Trained a custom YOLOv8 model using Roboflow for high-accuracy surface and pothole detection.",
       "Implemented autonomous spray activation logic based on real-time detection confidence scores.",
@@ -253,16 +215,29 @@ export const PROJECTS: Project[] = [
     github: "https://github.com/thekabi-4",
   },
   {
-    id: 5,
-    title: "MVA Academic Analyzer",
+    id: 4,
+    title: "Academic Performance Analyzer",
     category: "Featured",
     technologies: ["Python", "Streamlit", "scikit-learn", "MySQL"],
     description:
-      "End-to-end academic analytics platform for 10th-grade marksheet processing.",
+      "Automated 10th, 11th and 12th-grade marksheet analysis with error correction and clustering.",
     details: [
-      "Automated Excel parsing, validation, and data cleaning for inconsistent datasets.",
-      "Provided clustering, outlier detection, correlation insights, and subject performance metrics.",
-      "Delivered actionable insights for educators through an interactive Streamlit dashboard.",
+      "Delivered correlation insights, outlier detection, subject analytics, and dashboards for teachers.",
+    ],
+    link: "#",
+    github: "https://github.com/thekabi-4",
+  },
+  {
+    id: 5,
+    title: "Small Language Model RAG",
+    category: "Featured",
+    technologies: ["TinyLlama", "FAISS", "llama.cpp"],
+    description:
+      "Lightweight RAG framework optimized for low-resource devices.",
+    details: [
+      "Performed semantic search, answer formatting, and grammar correction.",
+      "Integrated GGUF TinyLlama models via llama.cpp.",
+      "Generated structured curriculum-aligned educational responses.",
     ],
     link: "#",
     github: "https://github.com/thekabi-4",
@@ -273,12 +248,8 @@ export const PROJECTS: Project[] = [
     category: "Other",
     technologies: ["TensorFlow.js", "Web ML"],
     description:
-      "Client-side waste classification system executed entirely within the browser.",
-    details: [
-      "Loaded ML models using model.json and weights.bin.",
-      "Performed real-time waste classification through webcam and image input.",
-      "Demonstrated lightweight, front-end-only ML deployment.",
-    ],
+      "TensorFlow.js-based browser ML model performing real-time waste classification via webcam.",
+    details: ["Demonstrated lightweight, front-end-only ML deployment."],
     link: "#",
     github: "https://github.com/thekabi-4",
   },
@@ -288,10 +259,8 @@ export const PROJECTS: Project[] = [
     category: "Other",
     technologies: ["Python", "Streamlit", "SQLite"],
     description:
-      "Attendance and payroll processing system deployed for a hospital and clinic chain.",
+      "Automated attendance sheet processing, HR validation rules, and payroll-ready reporting.",
     details: [
-      "Parsed Excel attendance sheets and validated daily logs.",
-      "Implemented complex HR policies including weekly offs, CL allocation, and consultant rules.",
       "Generated monthly summaries and payroll-ready reports for finance teams.",
     ],
     link: "#",
@@ -301,13 +270,10 @@ export const PROJECTS: Project[] = [
     id: 8,
     title: "Natural Language Detection",
     category: "Other",
-    technologies: ["scikit-learn", "TF-IDF", "NLTK"],
-    description: "ML model for detecting the language of input text.",
-    details: [
-      "Implemented preprocessing, TF-IDF vectorization, and classical ML classifiers.",
-      "Included a Streamlit interface and Jupyter Notebook for experimentation.",
-      "Supported multilingual datasets with evaluation metrics.",
-    ],
+    technologies: ["TF-IDF", "Classical ML"],
+    description:
+      "TF-IDF + classical ML classifiers for multilingual language identification.",
+    details: ["Supported multilingual datasets with evaluation metrics."],
     link: "#",
     github: "https://github.com/thekabi-4",
   },
@@ -319,8 +285,7 @@ export const CERTIFICATIONS: Certification[] = [
     issuer: "AWS",
     date: "2025",
   },
-  { name: "Foundations of Prompt Engineering", issuer: "AWS", date: "2025" },
-  { name: "Essentials of Prompt Engineering", issuer: "AWS", date: "2025" },
+  { name: "Prompt Engineering Certifications", issuer: "AWS", date: "2025" },
   { name: "AI for All", issuer: "NVIDIA", date: "2024" },
   {
     name: "Improving Real-World RAG Systems",
@@ -340,6 +305,16 @@ export const CERTIFICATIONS: Certification[] = [
   { name: "Python (Basic)", issuer: "HackerRank", date: "2024" },
   { name: "SQL (Basic)", issuer: "HackerRank", date: "2024" },
   {
+    name: "Introduction to Agile Methodology",
+    issuer: "Infosys Springboard",
+    date: "October 2025",
+  },
+  {
+    name: "Continuous Integration and Delivery (CI/CD)",
+    issuer: "Infosys Springboard",
+    date: "October 2025",
+  },
+  {
     name: "Microsoft Office Essentials",
     issuer: "Naan Mudhalvan",
     date: "2024",
@@ -349,12 +324,43 @@ export const CERTIFICATIONS: Certification[] = [
 export const EDUCATION: Education[] = [
   {
     degree: "B.Tech – Artificial Intelligence & Data Science",
-    institution: "Suguna College of Engineering",
+    institution:
+      "Suguna College of Engineering (Affiliated to Anna University)",
     year: "2022 – 2026",
   },
   {
     degree: "Senior Secondary – Computer Science",
-    institution: "Suguna PIP",
+    institution: "Suguna PIPS (Affiliated to CBSE)",
     year: "2020 – 2022",
+  },
+  {
+    degree: "Secondary Schooling – Computer Science",
+    institution: "Amrita Vidhyalayam (Affiliated to CBSE)",
+    year: "2020",
+  },
+];
+
+export const ACHIEVEMENTS = [
+  {
+    title: "Event Lead & POC – Macro Vision Academy",
+    description:
+      "Led execution of a large-scale coding world-record attempt; coordinated logistics, documentation, verification, and final submission with World Book of Records, London.",
+    highlight: "World Book of Records Event, 2024",
+  },
+  {
+    title: "Seed Funding Raised",
+    description:
+      "Successfully pitched and raised ₹1 Lakh seed funding for medical IoT innovation.",
+    highlight: "Rehabionics Healthcare Pvt. Ltd.",
+  },
+  {
+    title: "24-Hour Non-Stop Programming Codeathon",
+    description: "Group World Record organizer and participant.",
+    highlight: "Kalam’s World Records, 2024",
+  },
+  {
+    title: "Treasurer and AWS Instructor",
+    description: "Consecutive Two Time Treasurer and AWS Instructor.",
+    highlight: "Suguna College of Engineering",
   },
 ];
