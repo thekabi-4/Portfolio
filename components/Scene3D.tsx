@@ -3,7 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Points, PointMaterial, Float, Stars, Text } from "@react-three/drei";
 
 const NetEffect = () => {
-  const count = 100;
+  const count = 60;
   const radius = 2;
   const connectionDistance = 1.0;
   const maxConnections = 2000;
@@ -93,7 +93,7 @@ const NetEffect = () => {
         <PointMaterial
           transparent
           color="#22d3ee"
-          size={0.04}
+          size={0.03}
           sizeAttenuation={true}
           depthWrite={false}
         />
@@ -110,7 +110,7 @@ const NetEffect = () => {
         <lineBasicMaterial
           color="#8b5cf6"
           transparent
-          opacity={0.6}
+          opacity={0.3}
           depthWrite={false}
         />
       </lineSegments>
@@ -118,79 +118,11 @@ const NetEffect = () => {
   );
 };
 
-const FloatingShapes = () => {
-  const groupRef = useRef<any>(null);
-
-  useFrame((state) => {
-    if (groupRef.current) {
-      const { x, y } = state.pointer;
-      groupRef.current.position.x = x * 0.5;
-      groupRef.current.position.y = y * 0.5;
-    }
-  });
-
-  return (
-    <group ref={groupRef}>
-      <Float speed={1.5} rotationIntensity={1} floatIntensity={2}>
-        <mesh position={[1, 0.5, 0]} scale={0.2}>
-          <icosahedronGeometry args={[1, 0]} />
-          <meshStandardMaterial color="#8b5cf6" wireframe />
-        </mesh>
-      </Float>
-      <Float speed={2} rotationIntensity={1.5} floatIntensity={1.5}>
-        <mesh position={[-1, -0.5, 0.5]} scale={0.15}>
-          <octahedronGeometry args={[1, 0]} />
-          <meshStandardMaterial color="#06b6d4" wireframe />
-        </mesh>
-      </Float>
-    </group>
-  );
-};
-
-function FloatingFormulas() {
-  const formulas = [
-    "y = mx + b",
-    "E = mc^2",
-    "f(x) = 1 / (1 + e^-x)",
-    "∇f(x) = 0",
-    "P(A|B) = P(B|A)P(A)/P(B)",
-    "Attention(Q,K,V)",
-    "ReLU(x) = max(0,x)",
-    "L = -Σ y log(ŷ)",
-  ];
-
-  return (
-    <group>
-      {formulas.map((formula, i) => (
-        <Float key={i} speed={1} rotationIntensity={0.5} floatIntensity={0.5}>
-          <Text
-            position={[
-              (Math.random() - 0.5) * 15,
-              (Math.random() - 0.5) * 15,
-              (Math.random() - 0.5) * 10,
-            ]}
-            color="#06b6d4"
-            fontSize={0.3}
-            font="https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxM.woff"
-            anchorX="center"
-            anchorY="middle"
-            fillOpacity={0.3}
-          >
-            {formula}
-          </Text>
-        </Float>
-      ))}
-    </group>
-  );
-}
-
 const Scene3D: React.FC = () => {
   return (
-    <div className="fixed top-0 left-0 w-full h-full -z-10 bg-slate-950">
+    <div className="fixed top-0 left-0 w-full h-full -z-10">
       <Canvas camera={{ position: [0, 0, 1] }}>
         <NetEffect />
-        <FloatingShapes />
-        <FloatingFormulas />
         <Stars
           radius={100}
           depth={50}

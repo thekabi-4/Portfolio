@@ -58,7 +58,7 @@ const ModularFooter = () => {
         {/* Modular Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-12">
           {/* Transmission Module (Email) */}
-          <div className="md:col-span-5 group relative bg-slate-900/50 border border-slate-800 hover:border-cyan-500/50 transition-all duration-300 rounded-2xl p-6 overflow-hidden">
+          <div className="md:col-span-5 group relative bg-black/40 border border-white/10 hover:border-cyan-500/50 transition-all duration-300 rounded-2xl p-6 overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
               <ArrowUpRight className="w-5 h-5 text-cyan-500" />
             </div>
@@ -89,7 +89,7 @@ const ModularFooter = () => {
           </div>
 
           {/* Comms Module (Phone) */}
-          <div className="md:col-span-4 group relative bg-slate-900/50 border border-slate-800 hover:border-violet-500/50 transition-all duration-300 rounded-2xl p-6 overflow-hidden">
+          <div className="md:col-span-4 group relative bg-black/40 border border-white/10 hover:border-violet-500/50 transition-all duration-300 rounded-2xl p-6 overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
               <ArrowUpRight className="w-5 h-5 text-violet-500" />
             </div>
@@ -125,7 +125,7 @@ const ModularFooter = () => {
               href="https://github.com/thekabi-4"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 bg-slate-900/50 border border-slate-800 hover:border-white/50 hover:bg-slate-800 transition-all rounded-2xl p-4 flex items-center justify-between group"
+              className="flex-1 bg-black/40 border border-white/10 hover:border-white/50 hover:bg-white/5 transition-all rounded-2xl p-4 flex items-center justify-between group"
             >
               <div className="flex items-center gap-3">
                 <Github className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
@@ -139,7 +139,7 @@ const ModularFooter = () => {
               href="https://linkedin.com/in/kabilesh-naveenkumar"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 bg-slate-900/50 border border-slate-800 hover:border-blue-500/50 hover:bg-blue-900/10 transition-all rounded-2xl p-4 flex items-center justify-between group"
+              className="flex-1 bg-black/40 border border-white/10 hover:border-blue-500/50 hover:bg-blue-900/10 transition-all rounded-2xl p-4 flex items-center justify-between group"
             >
               <div className="flex items-center gap-3">
                 <Linkedin className="w-6 h-6 text-slate-400 group-hover:text-blue-400 transition-colors" />
@@ -152,7 +152,7 @@ const ModularFooter = () => {
           </div>
 
           {/* Location Module */}
-          <div className="md:col-span-12 group relative bg-slate-900/50 border border-slate-800 hover:border-emerald-500/50 transition-all duration-300 rounded-2xl p-6 overflow-hidden h-32 flex items-center">
+          <div className="md:col-span-12 group relative bg-black/40 border border-white/10 hover:border-emerald-500/50 transition-all duration-300 rounded-2xl p-6 overflow-hidden h-32 flex items-center">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.05),transparent)] opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="flex items-center gap-6 relative z-10">
               <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-400">

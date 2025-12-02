@@ -43,7 +43,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      className={`group relative bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20 cursor-pointer ${
+      className={`group relative bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20 cursor-pointer ${
         isFeatured ? "md:col-span-2 lg:col-span-1" : ""
       }`}
     >
@@ -51,7 +51,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
 
       <div className="p-6 relative z-10 h-full flex flex-col transform-gpu translate-z-10">
         <div className="flex justify-between items-start mb-4">
-          <div className="p-3 bg-slate-900 rounded-lg border border-slate-700 group-hover:border-cyan-500/30 transition-colors shadow-lg shadow-cyan-900/20">
+          <div className="p-3 bg-black/60 rounded-lg border border-white/10 group-hover:border-cyan-500/30 transition-colors shadow-lg shadow-cyan-900/20">
             <Cpu className="w-6 h-6 text-cyan-400" />
           </div>
           {isFeatured && (
@@ -83,7 +83,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
           {project.technologies.map((tech) => (
             <span
               key={tech}
-              className="px-2 py-1 text-xs font-medium bg-slate-900 text-cyan-200 rounded border border-slate-700 hover:border-cyan-500/50 transition-colors"
+              className="px-2 py-1 text-xs font-medium bg-black/60 text-cyan-200 rounded border border-white/10 hover:border-cyan-500/50 transition-colors"
             >
               {tech}
             </span>

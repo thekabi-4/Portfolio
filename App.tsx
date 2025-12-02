@@ -6,10 +6,11 @@ import CustomCursor from "./components/CustomCursor";
 import Section from "./components/Section";
 import ProjectCard from "./components/ProjectCard";
 import Modal from "./components/Modal";
+import BackgroundPortal from "./components/BackgroundPortal";
+import Scene3D from "./components/Scene3D";
 import SkillNetwork from "./components/SkillNetwork";
 
 // Lazy Load Heavy Components
-const Scene3D = React.lazy(() => import("./components/Scene3D"));
 const Terminal = React.lazy(() => import("./components/Terminal"));
 const CoreModules = React.lazy(() => import("./components/CoreModules"));
 const ValidationStack = React.lazy(
@@ -76,18 +77,20 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200 cursor-none">
       <CustomCursor />
-      <Suspense fallback={null}>
+
+      <BackgroundPortal>
         <Scene3D />
-      </Suspense>
+        {/* Global Background Gradients */}
+        <div className="fixed inset-0 pointer-events-none -z-20">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(10,10,10,0.8),rgba(0,0,0,1))]" />
+          <div className="absolute top-[20%] right-[10%] w-96 h-96 bg-cyan-900/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-[20%] left-[10%] w-96 h-96 bg-violet-900/5 rounded-full blur-3xl" />
+        </div>
+      </BackgroundPortal>
+
       <Navbar />
 
       <main className="relative">
-        {/* Global Background Gradients */}
-        <div className="fixed inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(17,24,39,0.7),rgba(15,23,42,1))]" />
-          <div className="absolute top-[20%] right-[10%] w-96 h-96 bg-cyan-900/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-[20%] left-[10%] w-96 h-96 bg-violet-900/10 rounded-full blur-3xl" />
-        </div>
         <Hero />
 
         {/* About Section */}
@@ -182,7 +185,7 @@ const App: React.FC = () => {
           id="what-i-do"
           title="Core Modules"
           subtitle="Bridging Intelligence and Engineering"
-          className="bg-slate-900/30"
+          className="bg-black/20 backdrop-blur-sm"
         >
           <CoreModules />
         </Section>
@@ -226,7 +229,7 @@ const App: React.FC = () => {
           id="projects"
           title="Deployed Models"
           subtitle="Inference Engines & Real-world Applications"
-          className="bg-slate-900/30"
+          className="bg-black/20 backdrop-blur-sm"
         >
           <h3 className="text-2xl font-bold text-white mb-6 pl-2 border-l-4 border-violet-500 font-mono">
             // Featured_Deployments
