@@ -78,14 +78,14 @@ const ValidationMetrics = () => {
         <div className="grid gap-4">
           {CERTIFICATIONS.map((cert, idx) => (
             <TiltCard key={idx} className="h-full">
-              <div className="relative h-full bg-slate-900/40 backdrop-blur-md border border-slate-800 p-6 rounded-xl overflow-hidden group-hover:border-cyan-500/50 transition-colors duration-300">
+              <div className="relative h-full bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-xl overflow-hidden group-hover:border-cyan-500/50 transition-colors duration-300">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 <div
                   className="relative z-10 flex items-start gap-4"
                   style={{ transform: "translateZ(20px)" }}
                 >
-                  <div className="p-3 bg-slate-800/50 rounded-lg text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.1)] group-hover:shadow-[0_0_25px_rgba(6,182,212,0.3)]">
+                  <div className="p-3 bg-black/50 rounded-lg text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.1)] group-hover:shadow-[0_0_25px_rgba(6,182,212,0.3)]">
                     <Award className="w-6 h-6" />
                   </div>
                   <div>
@@ -119,7 +119,7 @@ const ValidationMetrics = () => {
         <div className="grid gap-4">
           {ACHIEVEMENTS.map((achievement, idx) => (
             <TiltCard key={idx} className="h-full">
-              <div className="relative h-full bg-slate-900/40 backdrop-blur-md border border-slate-800 p-6 rounded-xl overflow-hidden group-hover:border-violet-500/50 transition-colors duration-300">
+              <div className="relative h-full bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-xl overflow-hidden group-hover:border-violet-500/50 transition-colors duration-300">
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 <div
@@ -141,7 +141,7 @@ const ValidationMetrics = () => {
                     {achievement.description}
                   </p>
 
-                  <div className="mt-4 pt-4 border-t border-slate-800/50 flex items-center gap-2 text-xs font-mono text-slate-500">
+                  <div className="mt-4 pt-4 border-t border-white/10 flex items-center gap-2 text-xs font-mono text-slate-500">
                     <span className="text-violet-500/70">&gt;</span>
                     {achievement.highlight}
                   </div>

@@ -54,11 +54,22 @@ const ValidationStack = () => {
     <div
       ref={containerRef}
       className="relative w-full"
-      style={{ height: `${data.length * 50}vh` }} // Dynamic height based on items
+      style={{ height: `${data.length * 35}vh` }} // Increased responsiveness
     >
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
+        {/* Progress Bar */}
+        <div className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 h-64 w-1 bg-white/5 rounded-full overflow-hidden">
+          <motion.div
+            style={{
+              height: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]),
+            }}
+            className={`w-full ${
+              activeCategory === "clearance" ? "bg-cyan-500" : "bg-violet-500"
+            } shadow-[0_0_10px_currentColor]`}
+          />
+        </div>
         {/* Category Toggle */}
-        <div className="absolute top-24 z-50 flex gap-2 p-1 bg-slate-900/80 backdrop-blur-md rounded-full border border-slate-800 shadow-lg">
+        <div className="absolute top-24 z-50 flex gap-2 p-1 bg-black/80 backdrop-blur-md rounded-full border border-white/10 shadow-lg">
           <button
             onClick={() => setActiveCategory("clearance")}
             className={`px-6 py-2 rounded-full text-xs font-bold font-mono transition-all ${
@@ -116,8 +127,8 @@ const ValidationStack = () => {
                   }}
                   className={`
                   absolute inset-0 w-full h-full
-                  bg-slate-900/80 backdrop-blur-xl
-                  border border-slate-700/50 rounded-3xl
+                  bg-black/80 backdrop-blur-xl
+                  border border-white/10 rounded-3xl
                   shadow-2xl shadow-black/50
                   flex flex-col overflow-hidden
                 `}
@@ -128,7 +139,7 @@ const ValidationStack = () => {
                   }}
                 >
                   {/* Card Header */}
-                  <div className="p-6 border-b border-slate-800/50 bg-gradient-to-r from-slate-900 to-slate-800/50">
+                  <div className="p-6 border-b border-white/10 bg-gradient-to-r from-black to-slate-900/50">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-4">
                         <div
@@ -162,14 +173,14 @@ const ValidationStack = () => {
 
                     <div className="relative z-10">
                       <div className="flex flex-wrap gap-3 mb-4 text-xs font-mono text-slate-400">
-                        <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-800/50 border border-slate-700">
+                        <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-black/50 border border-white/10">
                           <Database className="w-3 h-3" />
                           <span>
                             {"issuer" in item ? item.issuer : item.highlight}
                           </span>
                         </div>
                         {"date" in item && (
-                          <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-800/50 border border-slate-700">
+                          <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-black/50 border border-white/10">
                             <Cpu className="w-3 h-3" />
                             <span>{item.date}</span>
                           </div>
@@ -185,7 +196,7 @@ const ValidationStack = () => {
                     </div>
 
                     {/* Footer / Scroll Hint */}
-                    <div className="relative z-10 pt-4 border-t border-slate-800/50 flex items-center justify-between text-xs text-slate-500 font-mono">
+                    <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-500 font-mono">
                       <div className="flex items-center gap-2">
                         <Layers className="w-3 h-3" />
                         <span>

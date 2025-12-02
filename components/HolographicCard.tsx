@@ -33,7 +33,7 @@ const HolographicCard: React.FC<HolographicCardProps> = ({
       className={`relative group ${className}`}
     >
       <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-xl opacity-20 group-hover:opacity-100 transition duration-500 blur" />
-      <div className="relative h-full bg-slate-900/90 backdrop-blur-xl p-8 rounded-xl border border-slate-700/50 overflow-hidden">
+      <div className="relative h-full bg-black/90 backdrop-blur-xl p-8 rounded-xl border border-white/10 overflow-hidden">
         {/* Scanning Line Effect */}
         <div className="absolute top-0 left-0 w-full h-1 bg-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.5)] transform -translate-y-full group-hover:translate-y-[300px] transition-transform duration-1000 ease-in-out" />
 
@@ -41,7 +41,7 @@ const HolographicCard: React.FC<HolographicCardProps> = ({
         <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.05)_1px,transparent_1px)] bg-[size:20px_20px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         <div className="relative z-10">
-          <div className="mb-6 p-4 bg-slate-800/50 rounded-lg w-fit border border-slate-700 group-hover:border-cyan-500/50 group-hover:bg-cyan-900/20 transition-all duration-300">
+          <div className="mb-6 p-4 bg-black/50 rounded-lg w-fit border border-white/10 group-hover:border-cyan-500/50 group-hover:bg-cyan-900/20 transition-all duration-300">
             <div className="text-cyan-400 group-hover:text-cyan-300 transition-colors">
               {getIcon(title)}
             </div>

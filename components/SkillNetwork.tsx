@@ -161,7 +161,7 @@ const SkillNetwork = () => {
       }`}
     >
       {/* Background & Border Layer (Clipped) */}
-      <div className="absolute inset-0 rounded-3xl border border-slate-800/50 bg-slate-950/50 overflow-hidden z-0">
+      <div className="absolute inset-0 rounded-3xl border border-white/10 bg-black/50 overflow-hidden z-0">
         {/* Background Ambient Glow */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.08)_0%,transparent_70%)] pointer-events-none" />
       </div>
@@ -236,7 +236,7 @@ const SkillNetwork = () => {
               transition={{ type: "spring", duration: 1 }}
             >
               <div
-                className="relative flex items-center justify-center rounded-full bg-slate-950 border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.6)]"
+                className="relative flex items-center justify-center rounded-full bg-black/60 backdrop-blur-md border border-cyan-500/50 shadow-[0_0_50px_rgba(6,182,212,0.4)]"
                 style={{ width: CENTER_RADIUS * 2, height: CENTER_RADIUS * 2 }}
               >
                 <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-ping opacity-20" />
@@ -288,16 +288,16 @@ const SkillNetwork = () => {
                   whileHover={!isMobile ? { scale: 1.1 } : {}}
                   className={`relative cursor-pointer group ${
                     isMobile
-                      ? "flex items-center gap-4 bg-slate-900/40 p-3 rounded-xl border border-slate-800"
+                      ? "flex items-center gap-4 bg-black/40 p-3 rounded-xl border border-white/10"
                       : ""
                   }`}
                 >
                   {/* Node Circle */}
                   <div
                     className={`
-                    flex items-center justify-center rounded-full bg-slate-950 
-                    border-2 border-violet-500/60 group-hover:border-violet-400 group-hover:bg-slate-900
-                    shadow-[0_0_20px_rgba(139,92,246,0.2)] group-hover:shadow-[0_0_35px_rgba(139,92,246,0.6)]
+                    flex items-center justify-center rounded-full bg-black/60 backdrop-blur-sm
+                    border border-violet-500/40 group-hover:border-violet-400 group-hover:bg-black/80
+                    shadow-[0_0_15px_rgba(139,92,246,0.1)] group-hover:shadow-[0_0_30px_rgba(139,92,246,0.4)]
                     transition-all duration-300 shrink-0
                   `}
                     style={{ width: NODE_RADIUS * 2, height: NODE_RADIUS * 2 }}
@@ -314,7 +314,7 @@ const SkillNetwork = () => {
                         {node.items.slice(0, 4).map((item) => (
                           <span
                             key={item}
-                            className="text-[10px] bg-slate-800 text-cyan-100 px-2 py-0.5 rounded border border-slate-700"
+                            className="text-[10px] bg-black/60 text-cyan-100 px-2 py-0.5 rounded border border-white/10"
                           >
                             {item}
                           </span>
@@ -357,7 +357,7 @@ const SkillNetwork = () => {
                             ...tooltipProps.style,
                             zIndex: 50,
                           }}
-                          className="w-64 bg-slate-900/95 backdrop-blur-xl border border-cyan-500/30 p-4 rounded-xl shadow-2xl pointer-events-none"
+                          className="w-64 bg-black/80 backdrop-blur-xl border border-cyan-500/20 p-4 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.5)] pointer-events-none"
                         >
                           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 rounded-xl" />
                           <h4 className="relative text-cyan-400 text-xs font-bold mb-3 uppercase tracking-widest border-b border-cyan-500/20 pb-2">
@@ -367,7 +367,7 @@ const SkillNetwork = () => {
                             {node.items.map((item) => (
                               <span
                                 key={item}
-                                className="text-[10px] bg-slate-800/80 text-cyan-100 px-2 py-1 rounded border border-slate-700/50 shadow-sm"
+                                className="text-[10px] bg-black/80 text-cyan-100 px-2 py-1 rounded border border-white/10 shadow-sm"
                               >
                                 {item}
                               </span>

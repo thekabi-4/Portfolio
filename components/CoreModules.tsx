@@ -49,6 +49,17 @@ const CoreModules = () => {
     return colors[index % colors.length];
   };
 
+  const getActiveBorderColor = (index: number) => {
+    const colors = [
+      "border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.3)]",
+      "border-violet-500/50 shadow-[0_0_20px_rgba(139,92,246,0.3)]",
+      "border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.3)]",
+      "border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.3)]",
+      "border-pink-500/50 shadow-[0_0_20px_rgba(236,72,153,0.3)]",
+    ];
+    return colors[index % colors.length];
+  };
+
   return (
     <div className="w-full h-[600px] md:h-[500px] flex flex-col md:flex-row gap-4">
       {WHAT_I_DO.map((item, idx) => {
@@ -61,13 +72,12 @@ const CoreModules = () => {
             onMouseEnter={() => setActiveIndex(idx)}
             className={`
               relative group cursor-pointer overflow-hidden rounded-2xl 
-              border border-slate-800/60 bg-slate-950/40 backdrop-blur-sm
-              transition-colors duration-500
-              ${getBorderColor(idx)}
+              bg-black/40 backdrop-blur-md
+              transition-all duration-500
               ${
                 isActive
-                  ? "flex-[3] border-slate-700"
-                  : "flex-[1] border-slate-800/60"
+                  ? `flex-[3] ${getActiveBorderColor(idx)}`
+                  : `flex-[1] border border-white/10 hover:border-white/20`
               }
             `}
             initial={{ opacity: 0, y: 20 }}
@@ -93,9 +103,12 @@ const CoreModules = () => {
               <div className="flex items-center justify-between mb-4">
                 <div
                   className={`
-                  p-3 rounded-xl bg-slate-900/80 border border-slate-800 
-                  ${isActive ? "text-white border-slate-600" : "text-slate-400"}
-                  transition-all duration-300
+                  p-3 rounded-xl border transition-all duration-300
+                  ${
+                    isActive
+                      ? "bg-black/60 border-white/20 text-white shadow-inner"
+                      : "bg-black/40 border-white/5 text-slate-500 group-hover:text-slate-300"
+                  }
                 `}
                 >
                   {getIcon(item.title)}

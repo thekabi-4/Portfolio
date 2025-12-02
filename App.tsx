@@ -75,7 +75,7 @@ const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <div className="min-h-screen text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-200 cursor-none">
+    <div className="min-h-screen text-slate-300 selection:bg-cyan-500/30 selection:text-cyan-200 cursor-none">
       <CustomCursor />
 
       <BackgroundPortal>
@@ -102,35 +102,35 @@ const App: React.FC = () => {
               </Suspense>
 
               <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-                  <span className="block text-3xl font-bold text-cyan-400">
+                <div className="text-center p-4 bg-black/60 rounded-xl border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.1)] backdrop-blur-md group hover:border-cyan-500/40 transition-all">
+                  <span className="block text-3xl font-bold text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]">
                     6 Mo+
                   </span>
-                  <span className="text-xs text-gray-400 uppercase tracking-wide">
+                  <span className="text-xs text-cyan-200/70 uppercase tracking-widest font-mono mt-1 block">
                     Runtime
                   </span>
                 </div>
-                <div className="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-                  <span className="block text-3xl font-bold text-violet-400">
+                <div className="text-center p-4 bg-black/60 rounded-xl border border-violet-500/20 shadow-[0_0_15px_rgba(139,92,246,0.1)] backdrop-blur-md group hover:border-violet-500/40 transition-all">
+                  <span className="block text-3xl font-bold text-violet-400 drop-shadow-[0_0_10px_rgba(139,92,246,0.5)]">
                     10+
                   </span>
-                  <span className="text-xs text-gray-400 uppercase tracking-wide">
+                  <span className="text-xs text-violet-200/70 uppercase tracking-widest font-mono mt-1 block">
                     Modules
                   </span>
                 </div>
-                <div className="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-                  <span className="block text-3xl font-bold text-cyan-400">
+                <div className="text-center p-4 bg-black/60 rounded-xl border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.1)] backdrop-blur-md group hover:border-cyan-500/40 transition-all">
+                  <span className="block text-3xl font-bold text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]">
                     1L+
                   </span>
-                  <span className="text-xs text-gray-400 uppercase tracking-wide">
+                  <span className="text-xs text-cyan-200/70 uppercase tracking-widest font-mono mt-1 block">
                     Resources
                   </span>
                 </div>
-                <div className="text-center p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-                  <span className="block text-3xl font-bold text-violet-400">
+                <div className="text-center p-4 bg-black/60 rounded-xl border border-violet-500/20 shadow-[0_0_15px_rgba(139,92,246,0.1)] backdrop-blur-md group hover:border-violet-500/40 transition-all">
+                  <span className="block text-3xl font-bold text-violet-400 drop-shadow-[0_0_10px_rgba(139,92,246,0.5)]">
                     2
                   </span>
-                  <span className="text-xs text-gray-400 uppercase tracking-wide">
+                  <span className="text-xs text-violet-200/70 uppercase tracking-widest font-mono mt-1 block">
                     Benchmarks
                   </span>
                 </div>
@@ -139,13 +139,13 @@ const App: React.FC = () => {
 
             <div className="space-y-4">
               {/* Education Card */}
-              <div className="bg-slate-800/30 p-6 rounded-2xl border border-slate-700/50">
+              <div className="bg-black/40 p-6 rounded-2xl border border-white/10">
                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                   <GraduationCap className="text-cyan-400" /> Knowledge Base
                 </h3>
                 <div className="space-y-4">
                   {EDUCATION.map((edu, idx) => (
-                    <div key={idx} className="border-l-2 border-slate-700 pl-4">
+                    <div key={idx} className="border-l-2 border-white/10 pl-4">
                       <h4 className="font-semibold text-gray-200">
                         {edu.degree}
                       </h4>
@@ -157,7 +157,7 @@ const App: React.FC = () => {
               </div>
 
               {/* Contact Info Card */}
-              <div className="bg-slate-800/30 p-6 rounded-2xl border border-slate-700/50">
+              <div className="bg-black/40 p-6 rounded-2xl border border-white/10">
                 <h3 className="text-xl font-bold text-white mb-4">
                   Communication Protocols
                 </h3>
@@ -203,17 +203,17 @@ const App: React.FC = () => {
             {SKILLS.map((skillGroup) => (
               <div
                 key={skillGroup.category}
-                className="bg-slate-900/50 p-6 rounded-xl border border-slate-700/50"
+                className="bg-black/40 backdrop-blur-md p-6 rounded-xl border border-white/10"
               >
-                <h3 className="text-xl font-mono text-cyan-200 mb-4">
-                  <span className="text-cyan-500">&gt;</span>{" "}
+                <h3 className="text-xl font-mono text-cyan-200 mb-4 flex items-center gap-2">
+                  <span className="text-cyan-500">&gt;</span>
                   {skillGroup.category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {skillGroup.items.map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1 bg-slate-800/80 text-cyan-100/80 rounded text-xs font-mono border border-slate-700"
+                      className="px-3 py-1 bg-cyan-500/10 text-cyan-100/90 rounded text-xs font-mono border border-cyan-500/20"
                     >
                       {skill}
                     </span>
@@ -266,7 +266,7 @@ const App: React.FC = () => {
           title="Training Epochs"
           subtitle="Model Evolution & Parameter Tuning"
         >
-          <div className="space-y-8 relative border-l border-slate-800 ml-3 md:ml-6">
+          <div className="space-y-8 relative border-l border-white/10 ml-3 md:ml-6">
             {EXPERIENCE.map((exp, idx) => (
               <motion.div
                 key={exp.id}
@@ -277,9 +277,9 @@ const App: React.FC = () => {
                 className="relative pl-8 md:pl-12"
               >
                 {/* Timeline Node */}
-                <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-cyan-500 rounded-full ring-4 ring-slate-900" />
+                <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-cyan-500 rounded-full ring-4 ring-black" />
 
-                <div className="bg-slate-900/50 p-6 rounded-lg border border-slate-800 hover:border-cyan-500/30 transition-all group">
+                <div className="bg-black/40 p-6 rounded-lg border border-white/10 hover:border-cyan-500/30 transition-all group">
                   <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 font-mono text-sm">
                     <div className="text-cyan-400">
                       <span className="text-gray-500">

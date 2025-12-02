@@ -129,9 +129,7 @@ const Chatbot: React.FC = () => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`fixed bottom-6 right-6 z-50 p-4 rounded-full shadow-lg shadow-cyan-500/30 transition-all duration-300 transform hover:scale-110 flex items-center justify-center ${
-          isOpen
-            ? "bg-slate-800 text-cyan-400 rotate-90"
-            : "bg-cyan-600 text-white"
+          isOpen ? "bg-black text-cyan-400 rotate-90" : "bg-cyan-600 text-white"
         }`}
         aria-label="Toggle Chatbot"
       >
@@ -144,14 +142,14 @@ const Chatbot: React.FC = () => {
 
       {/* Chat Window */}
       <div
-        className={`fixed bottom-24 right-6 w-full max-w-[350px] sm:max-w-[400px] h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700 rounded-2xl shadow-2xl z-50 flex flex-col transition-all duration-300 origin-bottom-right ${
+        className={`fixed bottom-24 right-6 w-full max-w-[350px] sm:max-w-[400px] h-[500px] bg-black/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-50 flex flex-col transition-all duration-300 origin-bottom-right ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-90 translate-y-10 pointer-events-none"
         }`}
       >
         {/* Header */}
-        <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-gradient-to-r from-slate-900 to-slate-800 rounded-t-2xl">
+        <div className="p-4 border-b border-white/10 flex items-center justify-between bg-gradient-to-r from-black to-slate-900 rounded-t-2xl">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-cyan-900/30 rounded-lg border border-cyan-500/30">
               <Sparkles className="w-5 h-5 text-cyan-400" />
@@ -182,7 +180,7 @@ const Chatbot: React.FC = () => {
               }`}
             >
               {msg.role === "model" && (
-                <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-black border border-white/10 flex items-center justify-center flex-shrink-0">
                   <Bot className="w-5 h-5 text-cyan-400" />
                 </div>
               )}
@@ -190,7 +188,7 @@ const Chatbot: React.FC = () => {
                 className={`max-w-[80%] rounded-2xl p-3 text-sm ${
                   msg.role === "user"
                     ? "bg-cyan-600 text-white rounded-br-none"
-                    : "bg-slate-800 text-gray-200 border border-slate-700 rounded-bl-none"
+                    : "bg-black/50 text-gray-200 border border-white/10 rounded-bl-none"
                 }`}
               >
                 <div className="whitespace-pre-wrap leading-relaxed">
@@ -206,10 +204,10 @@ const Chatbot: React.FC = () => {
           ))}
           {isLoading && (
             <div className="flex gap-3 justify-start">
-              <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 rounded-full bg-black border border-white/10 flex items-center justify-center flex-shrink-0">
                 <Bot className="w-5 h-5 text-cyan-400" />
               </div>
-              <div className="bg-slate-800 border border-slate-700 rounded-2xl rounded-bl-none p-3 flex items-center gap-2">
+              <div className="bg-black/50 border border-white/10 rounded-2xl rounded-bl-none p-3 flex items-center gap-2">
                 <Loader2 className="w-4 h-4 text-cyan-400 animate-spin" />
                 <span className="text-xs text-gray-400">Processing...</span>
               </div>
@@ -219,7 +217,7 @@ const Chatbot: React.FC = () => {
         </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-slate-800 bg-slate-900/50 rounded-b-2xl">
+        <div className="p-4 border-t border-white/10 bg-black/50 rounded-b-2xl">
           <div className="relative flex items-center gap-2">
             <input
               type="text"
@@ -227,7 +225,7 @@ const Chatbot: React.FC = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Ask about my projects..."
-              className="w-full bg-slate-800/50 text-white placeholder-gray-500 rounded-xl py-3 pl-4 pr-12 text-sm border border-slate-700 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all"
+              className="w-full bg-black/50 text-white placeholder-gray-500 rounded-xl py-3 pl-4 pr-12 text-sm border border-white/10 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all"
               disabled={isLoading}
             />
             <button

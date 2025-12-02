@@ -29,9 +29,12 @@ const Section: React.FC<SectionProps> = ({
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white flex items-center gap-3">
-            <span className="w-2 h-8 bg-cyan-500 rounded-full inline-block"></span>
+        <div className="mb-16 relative">
+          {/* Title Glow */}
+          <div className="absolute -left-10 -top-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <h2 className="relative text-3xl md:text-4xl font-bold mb-4 text-white flex items-center gap-3">
+            <span className="w-2 h-8 bg-cyan-500 rounded-full inline-block shadow-[0_0_15px_rgba(6,182,212,0.5)]"></span>
             {title}
           </h2>
           {subtitle && <p className="text-gray-400 text-lg ml-5">{subtitle}</p>}

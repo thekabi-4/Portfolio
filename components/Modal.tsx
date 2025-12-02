@@ -32,18 +32,18 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, project }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-cyan-500/20 relative"
+              className="bg-black border border-white/10 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-cyan-500/20 relative"
             >
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 bg-slate-800 rounded-full hover:bg-slate-700 transition-colors z-10"
+                className="absolute top-4 right-4 p-2 bg-black/50 rounded-full hover:bg-white/10 transition-colors z-10"
               >
                 <X className="w-5 h-5 text-gray-400 hover:text-white" />
               </button>
@@ -52,7 +52,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, project }) => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Cpu className="w-24 h-24 text-cyan-500/20" />
                 </div>
-                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-slate-900 to-transparent">
+                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
                   <h2 className="text-3xl font-bold text-white">
                     {project.title}
                   </h2>
@@ -93,7 +93,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, project }) => {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-slate-800 text-cyan-200 rounded-lg border border-slate-700 text-sm"
+                        className="px-3 py-1 bg-black/50 text-cyan-200 rounded-lg border border-white/10 text-sm"
                       >
                         {tech}
                       </span>
@@ -101,7 +101,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, project }) => {
                   </div>
                 </div>
 
-                <div className="flex gap-4 pt-4 border-t border-slate-800">
+                <div className="flex gap-4 pt-4 border-t border-white/10">
                   {project.link !== "#" && (
                     <a
                       href={project.link}
@@ -115,7 +115,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, project }) => {
                   )}
                   <a
                     href="#"
-                    className="flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-semibold transition-colors border border-slate-700"
+                    className="flex items-center gap-2 px-6 py-3 bg-black/50 hover:bg-white/10 text-white rounded-lg font-semibold transition-colors border border-white/10"
                   >
                     <Github className="w-4 h-4" />
                     Source Code
