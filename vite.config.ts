@@ -4,8 +4,11 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, ".", "");
+
+  const isGithub = env.VITE_ENV === "github";
+
   return {
-    base: "/Portfolio/",
+    base: isGithub ? "/Portfolio/" : "/",
     server: {
       port: 3000,
       host: "0.0.0.0",
