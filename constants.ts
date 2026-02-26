@@ -22,11 +22,13 @@ export const PERSONAL_INFO = {
   github: "https://github.com/thekabi-4",
   address:
     "55, Sadayappa Gounder Street, Rathinapuri, Coimbatore, Tamilnadu - 641027",
-  about: `Deep-tech engineer specializing in Artificial Intelligence, Machine Learning, Generative AI, Retrieval-Augmented Generation (RAG), and Intelligent System Design. Experienced in building AI-powered solutions across healthcare, education, smart cities, and public safety, integrating end-to-end pipelines from data ingestion to deployment.
+  about: `AI / ML Engineer with hands-on experience in building and deploying machine learning, computer vision, and retrieval-augmented generation (RAG) systems.
 
-  As Founder of Rehabionics, I lead R&D of next-generation EMG/EMS physiotherapy devices with AI-powered signal processing, real-time analytics, and BLE IoT integration.
+Strong background in Python, PyTorch, TensorFlow, YOLOv8, FAISS, and LLM finetuning.
 
-  I design scalable AI systems including offline RAG architectures, CV-based surveillance, autonomous robotics, low-resource LLM inference, semantic search engines, and real-world embedded platforms. I focus on developing impact-driven, production-grade AI systems that combine intelligence, engineering, and purpose.`,
+Experienced in end-to-end ML pipelines including data pre-processing, model training, optimization, and API-based deployment.
+
+Built production-grade offline RAG systems, real-time computer vision applications, and applied AI solutions across healthcare, education, and public-safety use cases.`,
 };
 
 export const WHAT_I_DO = [
@@ -132,9 +134,9 @@ export const SKILLS: Skill[] = [
 export const EXPERIENCE: Experience[] = [
   {
     id: 1,
-    role: "Director",
+    role: "AI / ML Engineer",
     company: "Rehabionics Healthcare Pvt. Ltd.",
-    period: "March 2024 – Present",
+    period: "December 2025 – Present",
     location: "Coimbatore",
     description: [
       "Leading R&D for clinically reliable EMG/EMS physiotherapy and rehabilitation devices.",
@@ -147,23 +149,12 @@ export const EXPERIENCE: Experience[] = [
     id: 2,
     role: "Data Science Mentor",
     company: "Chronosphere",
-    period: "July 2025 – Present",
+    period: "July 2025 – December 2025",
     location: "Madhya Pradesh",
     description: [
       "Guide engineering teams on data science projects, courses and observability workflows.",
       "Conduct code reviews, architecture assessments, and debugging of distributed systems.",
       "Deliver technical training and learning materials for internal engineering cohorts.",
-    ],
-  },
-  {
-    id: 3,
-    role: "Event Lead & Point of Contact",
-    company: "Macro Vision Academy",
-    period: "2024",
-    location: "World Book of Records Event",
-    description: [
-      "Coordinated end-to-end execution of a large-scale coding world-record attempt.",
-      "Managed communication with World Book of Records, London, including verification, documentation, media proof, and final submission.",
     ],
   },
 ];

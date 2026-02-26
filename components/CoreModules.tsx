@@ -82,13 +82,13 @@ const CoreModules = () => {
             `}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             {/* Background Gradient & Pattern */}
             <div
               className={`absolute inset-0 bg-gradient-to-br ${getColor(
-                idx
+                idx,
               )} opacity-0 ${
                 isActive ? "opacity-100" : "group-hover:opacity-30"
               } transition-opacity duration-500`}

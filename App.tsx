@@ -14,7 +14,7 @@ import SkillNetwork from "./components/SkillNetwork";
 const Terminal = React.lazy(() => import("./components/Terminal"));
 const CoreModules = React.lazy(() => import("./components/CoreModules"));
 const ValidationStack = React.lazy(
-  () => import("./components/ValidationStack")
+  () => import("./components/ValidationStack"),
 );
 const ModularFooter = React.lazy(() => import("./components/ModularFooter"));
 const Chatbot = React.lazy(() => import("./components/Chatbot"));
@@ -242,7 +242,7 @@ const App: React.FC = () => {
                   project={project}
                   onClick={() => setSelectedProject(project)}
                 />
-              )
+              ),
             )}
           </div>
 
@@ -272,7 +272,7 @@ const App: React.FC = () => {
                 key={exp.id}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, margin: "-50px" }}
                 transition={{ delay: idx * 0.2 }}
                 className="relative pl-8 md:pl-12"
               >
@@ -294,7 +294,7 @@ const App: React.FC = () => {
                       </span>{" "}
                       • Acc:{" "}
                       <span className="text-green-400">
-                        {(0.9 + 0.01 * (EXPERIENCE.length - idx)).toFixed(4)}
+                        {(0.91 + 0.01 * (EXPERIENCE.length - idx)).toFixed(4)}
                       </span>
                     </div>
                   </div>

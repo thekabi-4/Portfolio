@@ -30,7 +30,7 @@ const Terminal: React.FC = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false, margin: "-50px" }}
       className="w-full max-w-4xl mx-auto font-mono text-sm md:text-base"
     >
       <div className="bg-black/60 backdrop-blur-xl rounded-lg overflow-hidden border border-white/10 shadow-2xl">
